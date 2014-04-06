@@ -1,0 +1,28 @@
+id ICON "mp3Rename.ico"
+1 24 "mp3Rename.manifest"
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "JEV Development"
+      VALUE "FileDescription", "Batch Rename of MP3 Files"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "Batch MP3 Rename"
+      VALUE "LegalCopyright", "Batch MP3 Rename"
+      VALUE "OriginalFilename", "batchMP3.exe"
+      VALUE "ProductName", "Batch MP3 Rename"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END
+
+#include "wx/msw/wx.rc"
