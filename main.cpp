@@ -200,7 +200,7 @@ void mainFrame::about(wxCommandEvent& event)
 	aboutInfo.SetVersion(wxT("1.0"));
 	aboutInfo.SetDescription(_(wxT("Batch Rename of MP3 Files")));
 	//aboutInfo.SetCopyright(wxT("(C) 2011"));
-	aboutInfo.SetWebSite(wxT("http://public.joshvanburen.com"));
+	aboutInfo.SetWebSite(wxT("https://github.com/Joshvanburen"));
 	aboutInfo.AddDeveloper(wxT("Josh Van Buren"));
 	aboutInfo.SetIcon(wxIcon(mp3Rename_xpm));
 
