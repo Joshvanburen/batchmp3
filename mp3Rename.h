@@ -6,6 +6,8 @@ Header functions for the mp3 rename
 #ifndef MP3RENAME_H
 #define MP3RENAME_H
 
+//Use unicode
+#define UNICODE
 
 //Use the static taglib
 #define TAGLIB_STATIC
@@ -45,22 +47,23 @@ class mainFrame : public wxFrame
 		void setFolder(wxCommandEvent &event);
 		void setMode(wxCommandEvent &event);
 		void setNamingScheme(wxString scheme);
+		void childClosed();
 		wxString getNamingScheme();
 	
 	//Private method and variable declarations
 	private:
-		void wxDirSearch(string dirPath, string extension);
-		void wxDirSearchSub(string dirPath, string extension);
+		void wxDirSearch(wstring dirPath, wstring extension);
+		void wxDirSearchSub(wstring dirPath, wstring extension);
 		void processFile(wxString filePath);
 		void renameFiles();
 		void exitApp(wxCommandEvent &event);
 		void about(wxCommandEvent& event);
 		void closeDir(wxCommandEvent& event);
 		void prefDialog(wxCommandEvent& event);
-		string dirPath;
+		wstring dirPath;
 		int mode;
-		vector <string> oldPaths;
-		vector <string> newPaths;
+		vector <wstring> oldPaths;
+		vector <wstring> newPaths;
 		wxMenu * fileMenu;
 		wxMenu * helpMenu;
 		wxMenu * editMenu;
@@ -107,6 +110,7 @@ class preferencesDialog : public wxDialog
 		void addRemItem(wxCommandEvent &event);
 		void itemSelect(wxCommandEvent &event);	
 		void fieldChange(wxCommandEvent &event);
+		void OnClose(wxCloseEvent& event);
 		bool checkNamingScheme();
 		wxComboBox* numCombo;
 		wxButton * aRButton;
@@ -152,6 +156,7 @@ BEGIN_EVENT_TABLE(preferencesDialog, wxDialog)
 	EVT_BUTTON(idAR, preferencesDialog::addRemItem)
 	EVT_COMBOBOX(idNC, preferencesDialog::itemSelect)
 	EVT_TEXT(idTF, preferencesDialog::fieldChange)
+	EVT_CLOSE(preferencesDialog::OnClose)
 END_EVENT_TABLE() //End the event table declaration
 
 #endif

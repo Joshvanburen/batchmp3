@@ -32,7 +32,7 @@ bool mp3Rename::OnInit()
 }
 
 //Constructor for the main class
-mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, wxT("Batch MP3 Rename"), wxDefaultPosition, wxSize(225,200)) 
+mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultPosition, wxSize(225,200)) 
 {
 	//Create the menubar
 	menuBar = new wxMenuBar();
@@ -43,41 +43,41 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, wxT("Batch MP3 Rename"), wxDefa
 	editMenu = new wxMenu();
 	
 	//Append items to the file menu
-	fileMenu->Append(idSF, wxT("&Open Folder\t Ctrl-O"), wxT("Select the folder"));
-	fileMenu->Append(idRN, wxT("&Rename Files\t Ctrl-R"), wxT("Start file rename"));
-	fileMenu->AppendCheckItem(idSS, wxT("Recurse Through Subd&irectories\t Ctrl-I"), wxT("Search subdirectories"));
-	fileMenu->Append(idCF, wxT("&Close Folder\t Ctrl-C"), wxT("Close the current directory"));
+	fileMenu->Append(idSF, L"&Open Folder\t Ctrl-O", L"Select the folder");
+	fileMenu->Append(idRN, L"&Rename Files\t Ctrl-R", L"Start file rename");
+	fileMenu->AppendCheckItem(idSS, L"Recurse Through Subd&irectories\t Ctrl-I", L"Search subdirectories");
+	fileMenu->Append(idCF, L"&Close Folder\t Ctrl-C", L"Close the current directory");
 	fileMenu->AppendSeparator();
-	fileMenu->Append(idEx, wxT("E&xit\t Ctrl-F4"), wxT("Exits the program"));
+	fileMenu->Append(idEx, L"E&xit\t Ctrl-F4", L"Exits the program");
 	
 	//Append to the help menu
-	helpMenu->Append(wxID_ABOUT, wxT("&About...\tF1"), wxT("Show about dialog"));
+	helpMenu->Append(wxID_ABOUT, L"&About...\tF1", L"Show about dialog");
 	
 	//Append to the edit menu
-	editMenu->Append(idOp, wxT("&Preferences\t Ctrl-P"), wxT("Edit preferences"));
+	editMenu->Append(idOp, L"&Preferences\t Ctrl-P", L"Edit preferences");
 	
 	//Add the file menu to the menu bar
-	menuBar->Append(fileMenu, wxT("&File"));
-	menuBar->Append(editMenu, wxT("&Edit"));
-	menuBar->Append(helpMenu, wxT("&Help"));
+	menuBar->Append(fileMenu, L"&File");
+	menuBar->Append(editMenu, L"&Edit");
+	menuBar->Append(helpMenu, L"&Help");
 	
 	//Set the menubar
 	SetMenuBar(menuBar);
 	
 	//Create the status bar
     CreateStatusBar(1);
-    SetStatusText(wxT("Batch MP3 Rename"));
+    SetStatusText(L"Batch MP3 Rename");
 	
 	//Sets the default naming scheme
-	namingScheme = wxT("<TrackNumber> <Artist> - <Title>");
+	namingScheme = L"<TrackNumber> <Artist> - <Title>";
 	
 	//String array for the field id's
-	fieldNames.Add(wxT("<Album>"));
-	fieldNames.Add(wxT("<Artist>"));
-	fieldNames.Add(wxT("<Genre>"));
-	fieldNames.Add(wxT("<Title>"));
-	fieldNames.Add(wxT("<TrackNumber>"));
-	fieldNames.Add(wxT("<Year>"));
+	fieldNames.Add(L"<Album>");
+	fieldNames.Add(L"<Artist>");
+	fieldNames.Add(L"<Genre>");
+	fieldNames.Add(L"<Title>");
+	fieldNames.Add(L"<TrackNumber>");
+	fieldNames.Add(L"<Year>");
 	
 	//Sets default field presence
 	fieldPresent[0] = false;
@@ -101,10 +101,10 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, wxT("Batch MP3 Rename"), wxDefa
 	panel->SetSizer(oSizer);
 	
 	//Create the buttons, check box
-	selDir = new wxButton(panel, idSFB, wxT("&Open Folder"));
-	sConv = new wxButton(panel, idRNB, wxT("&Rename Files"));
-	sSubs = new wxCheckBox(panel, idSSC, wxT("Recurs&ive"));
-	exitButton = new wxButton(panel, idExB, wxT("E&xit"));
+	selDir = new wxButton(panel, idSFB, L"&Open Folder");
+	sConv = new wxButton(panel, idRNB, L"&Rename Files");
+	sSubs = new wxCheckBox(panel, idSSC, L"Recurs&ive");
+	exitButton = new wxButton(panel, idExB, L"E&xit");
 	
 	//Disable the button, menu item
 	sConv->Enable(0);
@@ -123,15 +123,15 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, wxT("Batch MP3 Rename"), wxDefa
 void mainFrame::setFolder(wxCommandEvent &event)
 {
 	//Creates the directory dialog
-	wxDirDialog * chooseDir = new wxDirDialog(this, wxT("Choose a folder"), wxT(""), 
+	wxDirDialog * chooseDir = new wxDirDialog(this, L"Choose a folder", L"", 
 		wxDD_DEFAULT_STYLE);
 		
 	//If the user selects a directory
 	if(chooseDir->ShowModal() == wxID_OK)
 	{
 		//Sets the path
-		dirPath = string(chooseDir->GetPath().mb_str());
-		dirPath.append("\\");
+		dirPath = wstring(chooseDir->GetPath().wc_str());
+		dirPath.append(L"\\");
 		
 		//Enable the button, menu item
 		sConv->Enable(1);
@@ -196,12 +196,12 @@ void mainFrame::about(wxCommandEvent& event)
 {
 	//Creates the dialog and sets the properties
 	wxAboutDialogInfo aboutInfo;
-	aboutInfo.SetName(wxT("Batch MP3 Rename"));
-	aboutInfo.SetVersion(wxT("1.0"));
-	aboutInfo.SetDescription(_(wxT("Batch Rename of MP3 Files")));
-	//aboutInfo.SetCopyright(wxT("(C) 2011"));
-	aboutInfo.SetWebSite(wxT("https://github.com/Joshvanburen"));
-	aboutInfo.AddDeveloper(wxT("Josh Van Buren"));
+	aboutInfo.SetName(L"Batch MP3 Rename");
+	aboutInfo.SetVersion(L"1.0");
+	aboutInfo.SetDescription(_(L"Batch Rename of MP3 Files"));
+	//aboutInfo.SetCopyright(L"(C) 2011");
+	aboutInfo.SetWebSite(L"https://github.com/Joshvanburen");
+	aboutInfo.AddDeveloper(L"Josh Van Buren");
 	aboutInfo.SetIcon(wxIcon(mp3Rename_xpm));
 
 	//Displays the box
@@ -216,6 +216,18 @@ void mainFrame::prefDialog(wxCommandEvent& event)
 	
 	//Set the reference to the other class
 	pDialog->setMFRef(this);
+	
+	//Get the menu bar from the frame
+	wxMenuBar * fMenu = GetMenuBar();
+	
+	//Look for the edit menu
+	int eMenuIndex = fMenu->FindMenu(L"Edit");
+	
+	//Gets the edit menu
+	wxMenu * editMenu = fMenu->GetMenu(eMenuIndex);
+	
+	//Disable the menu item
+	editMenu->Enable(idOp, false);
 }
 
 //Method that closes the open directory
@@ -236,18 +248,18 @@ void mainFrame::mainSearch(wxCommandEvent &event)
 	//Call the particular search depending on the mode
 	if(mode == 1)
 		//Search sub directories
-		wxDirSearchSub(dirPath, "*.mp3");
+		wxDirSearchSub(dirPath, L"*.mp3");
 	//Else do not search sub directories
 	else
 		//Do not search sub directories
-		wxDirSearch(dirPath, "*.mp3");
+		wxDirSearch(dirPath, L"*.mp3");
 	
 	//Rename the files
 	renameFiles();
 }
 
 //Search directories without searching sub directories
-void mainFrame::wxDirSearch(string dirPath, string extension)
+void mainFrame::wxDirSearch(wstring dirPath, wstring extension)
 {
 	//Create the directory
 	wxDir sDir(dirPath);
@@ -266,7 +278,7 @@ void mainFrame::wxDirSearch(string dirPath, string extension)
     bool res = sDir.GetFirst(&fileName, extension);
 	
 	//Create the progress dialog
-	wxProgressDialog fileProg(wxT("Please wait"), wxT("Processing Files"), 100, this, wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH);
+	wxProgressDialog fileProg(L"Please wait", L"Processing Files", 100, this, wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH);
 	
 	//While there are more files to find, process them
     while(res)
@@ -282,11 +294,11 @@ void mainFrame::wxDirSearch(string dirPath, string extension)
     }
 	
 	//Update to finished
-	fileProg.Update(100, wxT("Finished"), NULL);
+	fileProg.Update(100, L"Finished", NULL);
 }
 
 //Search directory and subs
-void mainFrame::wxDirSearchSub(string dirPath, string extension)
+void mainFrame::wxDirSearchSub(wstring dirPath, wstring extension)
 {
 	//String array
 	wxArrayString files;
@@ -298,7 +310,7 @@ void mainFrame::wxDirSearchSub(string dirPath, string extension)
 	unsigned int count = files.GetCount();
 	
 	//Create the progress dialog
-	wxProgressDialog fileProg(wxT("Please wait"), wxT("Processing Files"), count, this, wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH);
+	wxProgressDialog fileProg(L"Please wait", L"Processing Files", count, this, wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH);
 	
 	//For loop to loop through the files
 	for(int i = 0; i<count; i++)
@@ -311,17 +323,17 @@ void mainFrame::wxDirSearchSub(string dirPath, string extension)
 	}
 	
 	//Update to finished
-	fileProg.Update(count, wxT("Finished"), NULL);
+	fileProg.Update(count, L"Finished", NULL);
 }
 
 //Process the matching file
 void mainFrame::processFile(wxString filePath)
 {
 	//Character pointer
-	char * cFPath = new char[256];
+	wchar_t * cFPath = new wchar_t[256];
 	
 	//Copy the string
-	strncpy(cFPath, (const char*)filePath.mb_str(wxConvUTF8), 255);
+	wcsncpy(cFPath, (const wchar_t*)filePath.wc_str(wxConvUTF8), 255);
 	
 	//Get the mp3 tag of the file
 	TagLib::FileRef f(cFPath);
@@ -333,7 +345,7 @@ void mainFrame::processFile(wxString filePath)
 		TagLib::Tag * tag = f.tag();
 		
 		//Backslash character
-		char backS = '\\';
+		wchar_t backS = '\\';
 		
 		//Gets the file name only, i.e. after the last slash
 		wxString folderPath = filePath.BeforeLast(wxUniChar(backS));
@@ -354,7 +366,7 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Replace the string
-				newName.Replace("<Album>", tag->album().toCString(), true);
+				newName.Replace(L"<Album>", tag->album().toCString(), true);
 			}
 		}
 			
@@ -371,7 +383,7 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Replace the string
-				newName.Replace("<Artist>", tag->artist().toCString(), true);
+				newName.Replace(L"<Artist>", tag->artist().toCString(), true);
 			}
 		}
 			
@@ -388,7 +400,7 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Replace the string
-				newName.Replace("<Genre>", tag->genre().toCString(), true);
+				newName.Replace(L"<Genre>", tag->genre().toCString(), true);
 			}
 		}
 			
@@ -405,7 +417,7 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Replace the string
-				newName.Replace("<Title>", tag->title().toCString(), true);
+				newName.Replace(L"<Title>", tag->title().toCString(), true);
 			}
 		}
 			
@@ -422,13 +434,13 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Temporary character array
-				char * tempA = new char[3];
+				wchar_t * tempA = new wchar_t[3];
 				
 				//Write track to temp array
-				sprintf(tempA, "%02d", tag->track());
+				wsprintf(tempA, L"%02d", tag->track());
 				
 				//Replace the string
-				newName.Replace("<TrackNumber>", tempA, true);
+				newName.Replace(L"<TrackNumber>", tempA, true);
 				
 				//Delete the temp array
 				delete[] tempA;
@@ -448,13 +460,13 @@ void mainFrame::processFile(wxString filePath)
 			else
 			{
 				//Temporary character array
-				char * tempA = new char[3];
+				wchar_t * tempA = new wchar_t[3];
 				
 				//Write track to temp array
-				sprintf(tempA, "%02d", tag->year());
+				wsprintf(tempA, L"%02d", tag->year());
 				
 				//Replace the string
-				newName.Replace("<Year>", tempA, true);
+				newName.Replace(L"<Year>", tempA, true);
 				
 				//Delete the temp array
 				delete[] tempA;
@@ -462,29 +474,29 @@ void mainFrame::processFile(wxString filePath)
 		}
 		
 		//Build the new file name
-		char * newCFPath = new char[256];
+		wchar_t * newCFPath = new wchar_t[256];
 		
 		//Add the folder path
-		strncpy(newCFPath, (const char*)folderPath.mb_str(wxConvUTF8), 255);
+		wcsncpy(newCFPath, (const wchar_t *)folderPath.wc_str(wxConvUTF8), 255);
 		
 		//Append slashes
-		strcat(newCFPath, "\\");
+		wcscat(newCFPath, L"\\");
 		
 		//Character buffer for new file name
-		char * newCFPath2 = new char[256];
+		wchar_t * newCFPath2 = new wchar_t[256];
 		
 		//Add slashes and track number
-		strncpy(newCFPath2, (const char*)newName.mb_str(wxConvUTF8), 255);
+		wcsncpy(newCFPath2, (const wchar_t *)newName.wc_str(wxConvUTF8), 255);
 		
 		//Append extension
-		strcat(newCFPath2, ".mp3");
+		wcscat(newCFPath2, L".mp3");
 		
 		//Conctatenate the strings
-		strcat(newCFPath, newCFPath2);
+		wcscat(newCFPath, newCFPath2);
 	
 		//Create the strings and add them to the vectors
-		string oS(cFPath);
-		string nS(newCFPath);
+		wstring oS(cFPath);
+		wstring nS(newCFPath);
 		oldPaths.push_back(oS);
 		newPaths.push_back(nS);
 		
@@ -502,7 +514,7 @@ void mainFrame::renameFiles()
 	for(unsigned int i = 0; i<oldPaths.size(); i++)
 	{
 		//Rename the files
-		rename(oldPaths[i].c_str(), newPaths[i].c_str());
+		_wrename(_wcsdup(oldPaths[i].c_str()), _wcsdup(newPaths[i].c_str()));
 	}
 }
 
@@ -516,7 +528,7 @@ void mainFrame::setNamingScheme(wxString scheme)
 	for(int i = 0; i<fieldNames.GetCount(); i++)
 	{
 		//Get the item at the index
-		string item = fieldNames.Item(i).ToStdString();
+		wstring item = fieldNames.Item(i).wc_str();
 		
 		//Check for the text in the field
 		if(namingScheme.ToStdString().find(fieldNames.Item(i).ToStdString()) == string::npos)
@@ -533,6 +545,22 @@ void mainFrame::setNamingScheme(wxString scheme)
 	}
 }
 
+//Function that lets the main frame know that the child has closed
+void mainFrame::childClosed()
+{
+	//Get the menu bar from the frame
+	wxMenuBar * fMenu = GetMenuBar();
+	
+	//Look for the edit menu
+	int eMenuIndex = fMenu->FindMenu(L"Edit");
+	
+	//Gets the edit menu
+	wxMenu * editMenu = fMenu->GetMenu(eMenuIndex);
+	
+	//Enable the menu item
+	editMenu->Enable(idOp, true);	
+}
+
 //Function that returns the naming scheme
 wxString mainFrame::getNamingScheme()
 {
@@ -541,7 +569,7 @@ wxString mainFrame::getNamingScheme()
 }
 
 //Constructor for the preferences dialog class
-preferencesDialog::preferencesDialog() : wxDialog(NULL, -1, "Preferences", wxDefaultPosition, wxSize(320,200), wxDEFAULT_DIALOG_STYLE)
+preferencesDialog::preferencesDialog() : wxDialog(NULL, -1, L"Preferences", wxDefaultPosition, wxSize(320,200), wxDEFAULT_DIALOG_STYLE)
 {	
 	//Panel for the dialog
 	wxPanel *panel = new wxPanel(this, wxID_ANY);
@@ -551,41 +579,41 @@ preferencesDialog::preferencesDialog() : wxDialog(NULL, -1, "Preferences", wxDef
 	wxBoxSizer * sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer * sizer3 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-	wxStaticBox * staticBox = new wxStaticBox(panel, wxID_ANY, wxT("Naming Options"));
+	wxStaticBox * staticBox = new wxStaticBox(panel, wxID_ANY, L"Naming Options");
 	wxStaticBoxSizer * staticSizer = new wxStaticBoxSizer(staticBox, wxVERTICAL);
 	
 	//Set the sizer for the panel
 	panel->SetSizer(mainSizer);
 	
 	//String array for the combo box of number of fields
-	numList.Add(wxT("Album"));
-	numList.Add(wxT("Artist"));
-	numList.Add(wxT("Genre"));
-	numList.Add(wxT("Title"));
-	numList.Add(wxT("Track Number"));
-	numList.Add(wxT("Year"));
+	numList.Add(L"Album");
+	numList.Add(L"Artist");
+	numList.Add(L"Genre");
+	numList.Add(L"Title");
+	numList.Add(L"Track Number");
+	numList.Add(L"Year");
 	
 	//String array for the field id's
-	fieldNames.Add(wxT("<Album>"));
-	fieldNames.Add(wxT("<Artist>"));
-	fieldNames.Add(wxT("<Genre>"));
-	fieldNames.Add(wxT("<Title>"));
-	fieldNames.Add(wxT("<TrackNumber>"));
-	fieldNames.Add(wxT("<Year>"));
+	fieldNames.Add(L"<Album>");
+	fieldNames.Add(L"<Artist>");
+	fieldNames.Add(L"<Genre>");
+	fieldNames.Add(L"<Title>");
+	fieldNames.Add(L"<TrackNumber>");
+	fieldNames.Add(L"<Year>");
 	
 	//Create the combo box
 	numCombo = new wxComboBox(panel, idNC,
-		wxT("Album"), wxDefaultPosition, wxDefaultSize, numList, wxCB_READONLY);
+		L"Album", wxDefaultPosition, wxDefaultSize, numList, wxCB_READONLY);
 		
 	//Create the text control
-	nameField = new wxTextCtrl(panel, idTF, "<TrackNumber> <Artist> - <Title>", wxDefaultPosition, wxDefaultSize,  
+	nameField = new wxTextCtrl(panel, idTF, L"<TrackNumber> <Artist> - <Title>", wxDefaultPosition, wxDefaultSize,  
 		wxTE_RICH, wxDefaultValidator, wxTextCtrlNameStr);
 		
 	//Create the buttons
-	aRButton = new wxButton(panel, idAR, wxT("&Add Field"));
-	okButton = new wxButton(panel, wxID_OK, wxT("&OK"));
-	canButton = new wxButton(panel, wxID_CANCEL, wxT("&Cancel"));
-	applyButton = new wxButton(panel, wxID_APPLY, wxT("&Apply"));
+	aRButton = new wxButton(panel, idAR, L"&Add Field");
+	okButton = new wxButton(panel, wxID_OK, L"&OK");
+	canButton = new wxButton(panel, wxID_CANCEL, L"&Cancel");
+	applyButton = new wxButton(panel, wxID_APPLY, L"&Apply");
 	
 	//Disable the apply button on opening
 	applyButton->Enable(0);
@@ -624,6 +652,9 @@ void preferencesDialog::onOK(wxCommandEvent &event)
 		//Enable the apply button
 		applyButton->Enable(0);
 		
+		//Close the frame
+		Close();
+		
 		//Destroy the dialog
 		Destroy();
 	}
@@ -631,13 +662,16 @@ void preferencesDialog::onOK(wxCommandEvent &event)
 	else
 	{
 		//Alert the user
-		wxMessageBox(wxT("Illegal Characters in the File Name"), wxT("Error"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(L"Illegal Characters in the File Name", L"Error", wxOK | wxICON_ERROR, this);
 	}
 }
 
 //Function that handles the events for the cancel button
 void preferencesDialog::onCancel(wxCommandEvent &event)
 {
+	//Close the dialog
+	Close();
+	
 	//Destroy the dialog
 	Destroy();
 }
@@ -661,7 +695,7 @@ void preferencesDialog::onApply(wxCommandEvent &event)
 	else
 	{
 		//Alert the user
-		wxMessageBox(wxT("Illegal Characters in the File Name"), wxT("Error"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(L"Illegal Characters in the File Name", L"Error", wxOK | wxICON_ERROR, this);
 	}
 }
 
@@ -697,7 +731,7 @@ void preferencesDialog::addRemItem(wxCommandEvent &event)
 				nameField->WriteText(fieldNames.Item(i));
 				
 				//Set the button label
-				aRButton->SetLabel(wxT("Remove Field"));
+				aRButton->SetLabel(L"Remove Field");
 			}
 			//Else, set to remove item
 			else
@@ -712,7 +746,7 @@ void preferencesDialog::addRemItem(wxCommandEvent &event)
 				nameField->AppendText(fieldText);
 				
 				//Set the button label
-				aRButton->SetLabel(wxT("Add Field"));
+				aRButton->SetLabel(L"Add Field");
 			}
 		}
 	}
@@ -750,13 +784,13 @@ void preferencesDialog::itemSelect(wxCommandEvent &event)
 			if(nFT.find(fieldNames.Item(i).ToStdString()) == string::npos)
 			{
 				//Not found, so set to add item
-				aRButton->SetLabel(wxT("Add Field"));
+				aRButton->SetLabel(L"Add Field");
 			}
 			//Else, set to remove item
 			else
 			{
 				//Set text to remove item
-				aRButton->SetLabel(wxT("Remove Field"));
+				aRButton->SetLabel(L"Remove Field");
 			}
 		}
 	}
@@ -767,6 +801,16 @@ void preferencesDialog::fieldChange(wxCommandEvent &event)
 {
 	//Enable the apply button
 	applyButton->Enable(1);
+}
+
+//Function that handles the close event
+void preferencesDialog::OnClose(wxCloseEvent& event)
+{
+	//Alert the parent that it's closed
+	mainFrameRef->childClosed();
+	
+	//Continue event handling
+	event.Skip();
 }
 
 //Function that sets the class reference
