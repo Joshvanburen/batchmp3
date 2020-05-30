@@ -329,14 +329,8 @@ void mainFrame::wxDirSearchSub(wstring dirPath, wstring extension)
 //Process the matching file
 void mainFrame::processFile(wxString filePath)
 {
-	//Character pointer
-	wchar_t * cFPath = new wchar_t[256];
-	
-	//Copy the string
-	wcsncpy(cFPath, (const wchar_t*)filePath.wc_str(wxConvUTF8), 255);
-	
 	//Get the mp3 tag of the file
-	TagLib::FileRef f(cFPath);
+	TagLib::FileRef f(filePath.wc_str());
 	
 	//If the tag is not null
 	if(!f.isNull() && f.tag())
@@ -472,38 +466,10 @@ void mainFrame::processFile(wxString filePath)
 				delete[] tempA;
 			}
 		}
-		
-		//Build the new file name
-		wchar_t * newCFPath = new wchar_t[256];
-		
-		//Add the folder path
-		wcsncpy(newCFPath, (const wchar_t *)folderPath.wc_str(wxConvUTF8), 255);
-		
-		//Append slashes
-		wcscat(newCFPath, L"\\");
-		
-		//Character buffer for new file name
-		wchar_t * newCFPath2 = new wchar_t[256];
-		
-		//Add slashes and track number
-		wcsncpy(newCFPath2, (const wchar_t *)newName.wc_str(wxConvUTF8), 255);
-		
-		//Append extension
-		wcscat(newCFPath2, L".mp3");
-		
-		//Conctatenate the strings
-		wcscat(newCFPath, newCFPath2);
 	
 		//Create the strings and add them to the vectors
-		wstring oS(cFPath);
-		wstring nS(newCFPath);
-		oldPaths.push_back(oS);
-		newPaths.push_back(nS);
-		
-		//Frees the memory
-		delete[] newCFPath2;
-		delete[] cFPath;
-		delete[] newCFPath;
+		oldPaths.push_back(filePath.ToStdWstring());
+		newPaths.push_back(folderPath.ToStdWstring() + wstring(L"\\") + newName.ToStdWstring() + wstring(L".mp3"));
 	}
 }
 
