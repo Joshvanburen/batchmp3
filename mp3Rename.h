@@ -64,14 +64,6 @@ class mainFrame : public wxFrame
 		int mode;
 		vector <wstring> oldPaths;
 		vector <wstring> newPaths;
-		wxMenu * fileMenu;
-		wxMenu * helpMenu;
-		wxMenu * editMenu;
-		wxMenuBar * menuBar;
-		wxButton * selDir;
-		wxButton * sConv;
-		wxButton * exitButton;
-		wxCheckBox * sSubs;
 		wxString namingScheme;
 		wxArrayString fieldNames;
 		bool fieldPresent [6];

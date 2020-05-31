@@ -35,12 +35,12 @@ bool mp3Rename::OnInit()
 mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultPosition, wxSize(225,200)) 
 {
 	//Create the menubar
-	menuBar = new wxMenuBar();
+	wxMenuBar * menuBar = new wxMenuBar();
 	
 	//Create the file menu, help menu, edit menu
-	fileMenu = new wxMenu();
-	helpMenu = new wxMenu();
-	editMenu = new wxMenu();
+	wxMenu * fileMenu = new wxMenu();
+	wxMenu * helpMenu = new wxMenu();
+	wxMenu * editMenu = new wxMenu();
 	
 	//Append items to the file menu
 	fileMenu->Append(idSF, L"&Open Folder\t Ctrl-O", L"Select the folder");
@@ -101,10 +101,10 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultP
 	panel->SetSizer(oSizer);
 	
 	//Create the buttons, check box
-	selDir = new wxButton(panel, idSFB, L"&Open Folder");
-	sConv = new wxButton(panel, idRNB, L"&Rename Files");
-	sSubs = new wxCheckBox(panel, idSSC, L"Recurs&ive");
-	exitButton = new wxButton(panel, idExB, L"E&xit");
+	wxButton * selDir = new wxButton(panel, idSFB, L"&Open Folder");
+	wxButton * sConv = new wxButton(panel, idRNB, L"&Rename Files");
+	wxCheckBox * sSubs = new wxCheckBox(panel, idSSC, L"Recurs&ive");
+	wxButton * exitButton = new wxButton(panel, idExB, L"E&xit");
 	
 	//Disable the button, menu item
 	sConv->Enable(0);
@@ -133,6 +133,18 @@ void mainFrame::setFolder(wxCommandEvent &event)
 		dirPath = wstring(chooseDir->GetPath().wc_str());
 		dirPath.append(L"\\");
 		
+		//Get the menu bar from the frame
+		wxMenuBar * fMenu = GetMenuBar();
+		
+		//Look for the edit menu
+		int fMenuIndex = fMenu->FindMenu(L"File");
+		
+		//Gets the edit menu
+		wxMenu * fileMenu = fMenu->GetMenu(fMenuIndex);
+		
+		//Find the button to disable
+		wxButton * sConv = (wxButton *)FindWindow(idRNB);
+		
 		//Enable the button, menu item
 		sConv->Enable(1);
 		fileMenu->Enable(idRN, 1);
@@ -152,6 +164,9 @@ void mainFrame::setMode(wxCommandEvent &event)
 		//Search sub directories
 		mode = 1;
 		
+		//Find the checkbox to disable
+		wxCheckBox * sSubs = (wxCheckBox *)FindWindow(idSSC);
+		
 		//Check the box
 		sSubs->SetValue(true);
 		
@@ -169,6 +184,9 @@ void mainFrame::setMode(wxCommandEvent &event)
 	{
 		//Do not search sub directories
 		mode = 0;
+		
+		//Find the checkbox to disable
+		wxCheckBox * sSubs = (wxCheckBox *)FindWindow(idSSC);
 		
 		//Check the box
 		sSubs->SetValue(false);
@@ -233,6 +251,18 @@ void mainFrame::prefDialog(wxCommandEvent& event)
 //Method that closes the open directory
 void mainFrame::closeDir(wxCommandEvent &event)
 {
+	//Get the menu bar from the frame
+	wxMenuBar * fMenu = GetMenuBar();
+	
+	//Look for the edit menu
+	int fMenuIndex = fMenu->FindMenu(L"File");
+	
+	//Gets the edit menu
+	wxMenu * fileMenu = fMenu->GetMenu(fMenuIndex);
+	
+	//Find the button to disable
+	wxButton * sConv = (wxButton *)FindWindow(idRNB);
+	
 	//Disable the button, menu items
 	sConv->Enable(0);
 	fileMenu->Enable(idRN, 0);
