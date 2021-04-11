@@ -6,9 +6,6 @@ Main file for the mp3 rename
 //Include the header with function and class definitions
 #include "mp3Rename.h"
 
-//Include the icon
-#include "mp3Rename.xpm"
-
 //Macro to implement the app
 IMPLEMENT_APP(mp3Rename)
 
@@ -88,7 +85,7 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultP
 	fieldPresent[5] = false;
 	
 	//Set the icon
-	SetIcon(wxIcon(mp3Rename_xpm));
+	SetIcon(wxIcon(L"id"));
 	
 	//Create the sizers for the frame
 	wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -220,7 +217,7 @@ void mainFrame::about(wxCommandEvent& event)
 	//aboutInfo.SetCopyright(L"(C) 2011");
 	aboutInfo.SetWebSite(L"https://github.com/Joshvanburen");
 	aboutInfo.AddDeveloper(L"Josh Van Buren");
-	aboutInfo.SetIcon(wxIcon(mp3Rename_xpm));
+	aboutInfo.SetIcon(wxIcon(L"id"));
 
 	//Displays the box
 	wxAboutBox(aboutInfo);
