@@ -29,7 +29,7 @@ bool mp3Rename::OnInit()
 }
 
 //Constructor for the main class
-mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultPosition, wxSize(225,200)) 
+mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultPosition, wxDefaultSize) 
 {
 	//Create the menubar
 	wxMenuBar * menuBar = new wxMenuBar();
@@ -114,6 +114,12 @@ mainFrame::mainFrame() : wxFrame(NULL, wxID_ANY, L"Batch MP3 Rename", wxDefaultP
 	sizer->Add(exitButton, 1, wxEXPAND | wxALL, 5);
 	oSizer->Add(sizer, 1, wxEXPAND | wxALL, 5);
 	oSizer->Add(sSubs, 1, wxEXPAND | wxALL, 5);
+	
+	//Fit the panel
+	oSizer->Fit(panel);
+	
+	//Set the size hints
+	oSizer->SetSizeHints(this);
 }
 
 //Function that sets the folder
